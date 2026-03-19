@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:opsz,wght@9..40,200;9..40,300;9..40,400;9..40,500&display=swap');
+
+:root {
+  --cabin: #17181C;
+  --cabin2: #1E1F24;
+  --cabin3: #26272D;
+  --gold: #C8A84B;
+  --gold2: #E2C97E;
+  --cream: #F0EDE4;
+  --cream2: #D8D3C7;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold) var(--cabin);
+}
+
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background: var(--cabin);
+  color: var(--cream);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: rgba(200, 168, 75, 0.3);
+  color: var(--cream);
+}
+
+/* Noise overlay */
+.noise {
+  position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0.022;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px;
+}
+
+/* Smooth scroll locking for GSAP pin */
+.pin-spacer { overflow: visible !important; }
