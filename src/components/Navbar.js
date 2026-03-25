@@ -24,17 +24,18 @@ export default function Navbar() {
     <nav
       className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between transition-all duration-700"
       style={{
-        padding: scrolled ? '18px 56px' : '28px 56px',
+        padding: scrolled ? '16px 56px' : '28px 56px',
         opacity: visible ? 1 : 0,
         pointerEvents: visible ? 'auto' : 'none',
         transform: visible ? 'translateY(0)' : 'translateY(-20px)',
-        background: scrolled ? 'rgba(23,24,28,0.88)' : 'transparent',
+        background: scrolled ? 'rgba(250,250,247,0.92)' : 'transparent',
         backdropFilter: scrolled ? 'blur(30px) saturate(1.4)' : 'none',
-        borderBottom: scrolled ? '1px solid rgba(200,168,75,0.18)' : '1px solid transparent',
+        borderBottom: scrolled ? '1px solid rgba(27,107,74,0.12)' : '1px solid transparent',
       }}
     >
-      <a href="#hero" className="font-display text-[22px] font-light tracking-[0.14em] text-cream no-underline">
-        عمرة <span className="text-gold">Omra</span>
+      <a href="#hero" className="font-display text-[22px] font-light tracking-[0.08em] text-dark no-underline flex items-center gap-3">
+        <span className="font-arabic text-emerald text-xl">عمرة</span>
+        <span>Omra</span>
       </a>
 
       <ul className="hidden md:flex gap-9 list-none">
@@ -42,7 +43,7 @@ export default function Navbar() {
           <li key={label}>
             <a
               href={`#${label.toLowerCase()}`}
-              className="text-[11px] font-light tracking-[0.18em] uppercase text-cream/50 no-underline hover:text-gold transition-colors"
+              className="text-[11px] font-light tracking-[0.18em] uppercase text-dark/50 no-underline hover:text-emerald transition-colors"
             >
               {label}
             </a>
@@ -52,7 +53,7 @@ export default function Navbar() {
 
       <button
         onClick={() => smoothTo('reservation')}
-        className="border border-gold text-gold px-7 py-2.5 font-body text-[10px] font-normal tracking-[0.18em] uppercase cursor-pointer transition-all hover:bg-gold hover:text-cabin"
+        className="border border-emerald text-emerald px-7 py-2.5 font-body text-[10px] font-medium tracking-[0.18em] uppercase cursor-pointer transition-all hover:bg-emerald hover:text-white rounded-sm"
         style={{ background: 'transparent' }}
       >
         Réserver

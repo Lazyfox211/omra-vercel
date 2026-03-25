@@ -10,7 +10,7 @@ gsap.registerPlugin(ScrollTrigger)
 export default function Hero() {
   const wrapperRef = useRef(null)
   const pinRef = useRef(null)
-  const darkRef = useRef(null)
+  const whiteRef = useRef(null)
   const sacredRef = useRef(null)
   const wlBackRef = useRef(null)
   const wlFrontRef = useRef(null)
@@ -18,6 +18,7 @@ export default function Hero() {
   const revealRef = useRef(null)
   const locRef = useRef(null)
   const scrollHintRef = useRef(null)
+  const vignetteRef = useRef(null)
 
   const [place, setPlace] = useState(null)
 
@@ -34,64 +35,67 @@ export default function Hero() {
         opacity: 1, duration: 1, delay: 0.8, ease: 'power2.out'
       })
 
-      // Master scroll timeline
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: wrapperRef.current,
           start: 'top top',
-          end: '+=300%',
+          end: '+=350%',
           pin: pinRef.current,
-          scrub: 0.5,
+          scrub: 0.6,
           anticipatePin: 1,
         }
       })
 
       tl
-        // === PHASE 1: Window opens (0 → 0.5) ===
         // Scroll hint disappears
         .to(scrollHintRef.current, { opacity: 0, duration: 0.04 }, 0)
 
         // Overlay (closest layer) — biggest, fastest zoom
         .to(wlOverRef.current, {
-          scale: 6, opacity: 0, duration: 0.4, ease: 'power1.in',
+          scale: 7, opacity: 0, duration: 0.45, ease: 'power1.in',
           transformOrigin: 'center center'
         }, 0)
 
         // Front window frame
         .to(wlFrontRef.current, {
-          scale: 4.5, opacity: 0, duration: 0.45, ease: 'power1.in',
+          scale: 5.5, opacity: 0, duration: 0.5, ease: 'power1.in',
           transformOrigin: 'center center'
         }, 0.02)
 
-        // Back window frame (slowest)
+        // Back window frame
         .to(wlBackRef.current, {
-          scale: 3.5, opacity: 0, duration: 0.5, ease: 'power1.in',
+          scale: 4, opacity: 0, duration: 0.55, ease: 'power1.in',
           transformOrigin: 'center center'
         }, 0.05)
 
-        // Darkness fades → sacred image revealed
-        .to(darkRef.current, {
-          opacity: 0, duration: 0.45, ease: 'power2.inOut'
+        // White cover fades → sacred image revealed
+        .to(whiteRef.current, {
+          opacity: 0, duration: 0.5, ease: 'power2.inOut'
         }, 0.04)
 
-        // Sacred image subtle pull-back
+        // Sacred image subtle zoom out
         .to(sacredRef.current, {
           scale: 1, duration: 1, ease: 'none'
         }, 0)
 
-        // === PHASE 2: Text appears (0.5 → 0.8) ===
+        // Vignette appears for text contrast
+        .to(vignetteRef.current, {
+          opacity: 1, duration: 0.3, ease: 'power2.out'
+        }, 0.4)
+
+        // Text appears
         .to(revealRef.current, {
           opacity: 1, duration: 0.2, ease: 'power2.out'
         }, 0.5)
 
         .fromTo(revealRef.current?.querySelector('.reveal-main'), {
-          y: 50, opacity: 0
+          y: 60, opacity: 0
         }, {
           y: 0, opacity: 1, duration: 0.2, ease: 'power3.out'
         }, 0.52)
 
         .fromTo(revealRef.current?.querySelector('.reveal-sub'), {
-          y: 25, opacity: 0
+          y: 30, opacity: 0
         }, {
           y: 0, opacity: 1, duration: 0.15, ease: 'power3.out'
         }, 0.6)
@@ -100,21 +104,19 @@ export default function Hero() {
         .to(locRef.current, {
           opacity: 1, duration: 0.15, ease: 'power2.out'
         }, 0.65)
-
-      // === PHASE 3 (0.8 → 1): Hold ===
     })
 
     return () => ctx.revert()
   }, [place])
 
-  if (!place) return <div className="h-screen w-screen bg-cabin" />
+  if (!place) return <div className="h-screen w-screen bg-surface" />
 
   return (
     <div ref={wrapperRef} className="relative w-full" id="hero">
       <div
         ref={pinRef}
         className="relative w-screen h-screen overflow-hidden"
-        style={{ background: 'var(--cabin)' }}
+        style={{ background: 'var(--surface)' }}
       >
         {/* L1: Sacred image */}
         <div className="absolute z-[1]" style={{ inset: '-10%' }}>
@@ -124,17 +126,17 @@ export default function Hero() {
             alt={place.name}
             className="w-full h-full object-cover"
             style={{
-              transform: 'scale(1.15)',
-              filter: 'brightness(0.45) saturate(1.2) contrast(1.05)',
+              transform: 'scale(1.2)',
+              filter: 'brightness(0.85) saturate(1.15) contrast(1.05)',
             }}
           />
         </div>
 
-        {/* L2: Dark cabin overlay */}
+        {/* L2: White cover (replaces dark cabin) */}
         <div
-          ref={darkRef}
+          ref={whiteRef}
           className="absolute inset-0 z-[2]"
-          style={{ background: 'var(--cabin)' }}
+          style={{ background: 'var(--surface)' }}
         />
 
         {/* L3: Window back */}
@@ -163,7 +165,7 @@ export default function Hero() {
           <img src={WINDOW_LAYERS.front} alt="" className="w-full h-full object-cover" />
         </div>
 
-        {/* L5: Window overlay (closest) */}
+        {/* L5: Window overlay */}
         <div
           ref={wlOverRef}
           className="absolute z-[5] pointer-events-none"
@@ -176,39 +178,52 @@ export default function Hero() {
           <img src={WINDOW_LAYERS.over} alt="" className="w-full h-full object-cover" />
         </div>
 
-        {/* L6: "Votre voyage commence ici" */}
+        {/* L6: Vignette for text readability */}
+        <div
+          ref={vignetteRef}
+          className="absolute inset-0 z-[8] pointer-events-none"
+          style={{
+            opacity: 0,
+            background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.45) 100%)',
+          }}
+        />
+
+        {/* L7: Text overlay */}
         <div
           ref={revealRef}
           className="absolute z-[9] inset-0 flex flex-col items-center justify-center text-center px-6 pointer-events-none"
           style={{ opacity: 0 }}
         >
+          <div className="font-arabic text-2xl md:text-3xl text-white/80 mb-4" style={{ textShadow: '0 2px 20px rgba(0,0,0,0.4)' }}>
+            بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ
+          </div>
           <h1
-            className="reveal-main font-display font-light italic leading-[0.95]"
+            className="reveal-main font-display font-light leading-[0.95]"
             style={{
               fontSize: 'clamp(38px, 8vw, 100px)',
-              color: 'var(--cream)',
-              textShadow: '0 6px 80px rgba(0,0,0,0.6)',
+              color: '#fff',
+              textShadow: '0 6px 80px rgba(0,0,0,0.5)',
               letterSpacing: '0.02em',
             }}
           >
-            Votre voyage<br />commence ici
+            Votre voyage<br /><em className="italic" style={{ color: '#E8F5EE' }}>commence ici</em>
           </h1>
           <p
             className="reveal-sub mt-6"
             style={{
               fontSize: 'clamp(11px, 1.4vw, 16px)',
-              fontWeight: 200,
+              fontWeight: 300,
               letterSpacing: '0.3em',
               textTransform: 'uppercase',
-              color: 'var(--gold2)',
-              textShadow: '0 2px 30px rgba(0,0,0,0.5)',
+              color: 'rgba(255,255,255,0.85)',
+              textShadow: '0 2px 30px rgba(0,0,0,0.4)',
             }}
           >
             Omra avec Mehdi Abu AbdiLleh
           </p>
         </div>
 
-        {/* L7: Location label */}
+        {/* L8: Location label */}
         <div
           ref={locRef}
           className="absolute z-[9] text-center pointer-events-none"
@@ -222,20 +237,20 @@ export default function Hero() {
             className="font-display font-light"
             style={{
               fontSize: 'clamp(14px, 2vw, 22px)',
-              color: 'var(--gold)',
+              color: '#fff',
               letterSpacing: '0.15em',
-              textShadow: '0 2px 20px rgba(0,0,0,0.5)',
+              textShadow: '0 2px 20px rgba(0,0,0,0.4)',
             }}
           >
             {place.name}
           </div>
           <div
+            className="font-arabic"
             style={{
-              fontSize: 'clamp(10px, 1.2vw, 15px)',
-              color: 'rgba(240,237,228,0.45)',
-              marginTop: '4px',
-              letterSpacing: '0.2em',
-              textShadow: '0 2px 10px rgba(0,0,0,0.4)',
+              fontSize: 'clamp(12px, 1.4vw, 18px)',
+              color: 'rgba(255,255,255,0.6)',
+              marginTop: '6px',
+              textShadow: '0 2px 10px rgba(0,0,0,0.3)',
             }}
           >
             {place.arabic}
@@ -255,7 +270,7 @@ export default function Hero() {
           <div
             className="w-px h-14"
             style={{
-              background: 'linear-gradient(180deg, transparent, var(--gold))',
+              background: 'linear-gradient(180deg, transparent, var(--emerald))',
               animation: 'sPulse 2.2s ease-in-out infinite',
             }}
           />
@@ -264,7 +279,7 @@ export default function Hero() {
               fontSize: '8px',
               letterSpacing: '0.35em',
               textTransform: 'uppercase',
-              color: 'rgba(240,237,228,0.22)',
+              color: 'rgba(27,107,74,0.5)',
             }}
           >
             Défiler

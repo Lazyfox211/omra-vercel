@@ -1,6 +1,6 @@
 # Omra — Mehdi Abu AbdiLleh
 
-Site de pèlerinage Omra avec animation hublot d'avion au scroll.
+Site de pèlerinage Omra avec animation hublot d'avion au scroll. Thème clair blanc/vert islamique.
 
 ## Stack
 - **Next.js 14** (App Router)
@@ -20,7 +20,7 @@ npx vercel
 1. Push ce dossier sur un repo GitHub
 2. Va sur [vercel.com/new](https://vercel.com/new)
 3. Importe le repo
-4. Clique "Deploy" — c'est tout
+4. Clique "Deploy"
 
 ### Option 3 : Local
 ```bash
@@ -33,26 +33,20 @@ npm run dev
 ```
 src/
 ├── app/
-│   ├── layout.js      # Root layout + fonts
-│   ├── page.js        # Page principale
-│   └── globals.css    # Tailwind + custom styles
+│   ├── layout.js
+│   ├── page.js
+│   └── globals.css
 ├── components/
-│   ├── Hero.js        # Animation hublot GSAP ScrollTrigger
-│   ├── Navbar.js      # Nav (apparaît après le zoom)
-│   ├── Stats.js       # Compteurs animés
-│   ├── Includes.js    # 8 cartes services
-│   ├── Mehdi.js       # Section encadrant
-│   ├── Programme.js   # Timeline 10 jours
-│   ├── Prix.js        # Carte tarif
-│   ├── Reservation.js # Formulaire 3 étapes
-│   ├── Reveal.js      # Wrapper animation scroll
-│   └── Footer.js      # FAQ + Footer + Sticky bar
+│   ├── Hero.js
+│   ├── Navbar.js
+│   ├── Stats.js
+│   ├── Includes.js
+│   ├── Mehdi.js
+│   ├── Programme.js
+│   ├── Prix.js
+│   ├── Reservation.js
+│   ├── Reveal.js
+│   └── Footer.js
 └── lib/
-    └── data.js        # Images sacrées + layers hublot
+    └── data.js
 ```
-
-## Personnaliser
-- **Images** : Remplace les URLs Unsplash dans `src/lib/data.js`
-- **Prix** : Modifie dans `Prix.js` et `Reservation.js`
-- **Dates** : Modifie le tableau `DATES` dans `Reservation.js`
-- **Couleurs** : Modifie les variables CSS dans `globals.css` et `tailwind.config.js`

@@ -1,4 +1,4 @@
-// Two sacred places — always coherent: image matches label
+// Sacred places
 export const PLACES = [
   {
     id: 'haram',
@@ -14,13 +14,12 @@ export const PLACES = [
   },
 ]
 
-// Picks one based on current second — roughly 50/50
 export function getPlace() {
   const idx = Math.floor(Date.now() / 1000) % 2
   return PLACES[idx]
 }
 
-// Window layer images from Jesko Jets
+// Window layer images
 export const WINDOW_LAYERS = {
   back: 'https://cdn.prod.website-files.com/68b57ef5ef86011d9b251e8e/68d27a91bc0bf516a17a3f69_img_hero-back.webp',
   front: 'https://cdn.prod.website-files.com/68b57ef5ef86011d9b251e8e/68d9dfe10f1c8a1d719c1e63_917d8b944f7f57b7fbe3969bf2719a2e_img_hero-front.webp',

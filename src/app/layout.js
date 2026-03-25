@@ -2,14 +2,14 @@ import './globals.css'
 
 export const metadata = {
   title: 'Omra — Mehdi Abu AbdiLleh',
-  description: 'Pèlerinage Omra encadré personnellement par Mehdi Abu AbdiLleh. Tout inclus, zéro surprise.',
+  description: 'Pèlerinage Omra encadré personnellement par Mehdi Abu AbdiLleh. Cours de fiqh, visites guidées, accompagnement de A à Z.',
 }
 
 export default function RootLayout({ children }) {
   return (
     <html lang="fr">
       <body>
-        <div className="noise" />
+        <div className="geo-pattern" />
         {children}
       </body>
     </html>
